@@ -1,0 +1,76 @@
+{
+  "name": "Lucky Coin",
+  "symbol": "LCKY",
+  "description": "LCKY - Волшебный Горшочек. Кросс-чейн платформа токенов с эмиссией, donation механизмами и SOS функцией. Работает на Ethereum и Internet Computer.",
+  "decimals": 18,
+  "totalSupply": "108000000000000000000000000000",
+  "maxSupply": "108000000000000000000000000000",
+  "image": "https://assets.lckycoin.com/imgs/lckycoin.png",
+  "external_url": "https://lckycoin.com",
+  "background_color": "667eea",
+  "attributes": [
+    {
+      "trait_type": "Type",
+      "value": "Utility Token"
+    },
+    {
+      "trait_type": "Standard",
+      "value": "ERC20 / ICRC1"
+    },
+    {
+      "trait_type": "Emission Type",
+      "value": "Halving (4 years)"
+    },
+    {
+      "trait_type": "Initial Reward",
+      "value": "50 LCKY per block"
+    },
+    {
+      "trait_type": "Max Supply",
+      "value": "108 Billion"
+    },
+    {
+      "trait_type": "Platforms",
+      "value": "Ethereum, ICP"
+    }
+  ],
+  "properties": {
+    "website": "https://lckycoin.com",
+    "whitepaper": "https://docs.lckycoin.com",
+    "github": "https://github.com/lckycoin",
+    "twitter": "https://twitter.com/lckycoin",
+    "discord": "https://discord.gg/lckycoin"
+  },
+  "features": {
+    "mining": true,
+    "halving": true,
+    "donation": true,
+    "burning": true,
+    "sos_mechanism": true,
+    "multi_chain": true,
+    "pausable": true
+  },
+  "tokenomics": {
+    "mining": "70%",
+    "team": "15%",
+    "community": "10%",
+    "liquidity": "5%"
+  },
+  "contracts": {
+    "ethereum": {
+      "mainnet": "TBD",
+      "sepolia": "TBD"
+    },
+    "icp": {
+      "mainnet": "TBD",
+      "local": "TBD"
+    }
+  },
+  "social": {
+    "telegram": "https://t.me/lckycoin",
+    "discord": "https://discord.gg/lckycoin",
+    "twitter": "https://twitter.com/lckycoin",
+    "medium": "https://medium.com/@lckycoin"
+  }
+}
+

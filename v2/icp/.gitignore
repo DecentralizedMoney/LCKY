@@ -1,0 +1,31 @@
+# DFX
+.dfx/
+dist/
+
+# Mops
+.mops/
+
+# Build
+node_modules/
+
+# Environment
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Frontend build
+src/lcky_frontend/dist/
+
+# Logs
+*.log
+
+# Canister IDs (keep canister_ids.json for reference)
+# But ignore local versions
+canister_ids.json.local
+

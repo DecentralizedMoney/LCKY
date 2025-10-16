@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LCKY - Lucky Coin Platform 🪄</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .network-selector {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .network-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .network-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+        }
+
+        .network-btn.ethereum {
+            background: linear-gradient(135deg, #627eea 0%, #8c7ae6 100%);
+        }
+
+        .network-btn.icp {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .network-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .network-btn.active {
+            box-shadow: 0 0 0 3px rgba(255,255,255,0.5);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stat-grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px;
+            background: #f7f7f7;
+            border-radius: 8px;
+        }
+
+        .stat-label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .stat-value {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .action-section {
+            margin-top: 20px;
+        }
+
+        .input-group {
+            margin: 15px 0;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border 0.3s;
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .messages-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+
+        .message-item {
+            background: #f7f7f7;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .message-text {
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .message-amount {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: 500;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .wallet-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .wallet-address {
+            font-family: monospace;
+            word-break: break-all;
+            opacity: 0.9;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🪄 LCKY - Lucky Coin 🍯</h1>
+            <p>Волшебная кросс-чейн платформа токенов</p>
+        </div>
+
+        <div class="network-selector">
+            <h3 style="text-align: center; margin-bottom: 15px;">Выберите сеть:</h3>
+            <div class="network-buttons">
+                <button class="network-btn ethereum active" onclick="switchNetwork('ethereum')">
+                    🔷 Ethereum
+                </button>
+                <button class="network-btn icp" onclick="switchNetwork('icp')">
+                    ♾️ Internet Computer
+                </button>
+            </div>
+        </div>
+
+        <div id="wallet-section"></div>
+        <div id="loading" class="loading"><div class="spinner"></div><p>Загрузка...</p></div>
+        <div id="alert-section"></div>
+
+        <div class="main-content">
+            <!-- Stats Card -->
+            <div class="card">
+                <h2>📊 Статистика</h2>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <span class="stat-label">Total Supply:</span>
+                        <span class="stat-value" id="totalSupply">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Total Mined:</span>
+                        <span class="stat-value" id="totalMined">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Current Reward:</span>
+                        <span class="stat-value" id="currentReward">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Donations Count:</span>
+                        <span class="stat-value" id="donationCount">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Your Balance:</span>
+                        <span class="stat-value" id="userBalance">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Claim Card -->
+            <div class="card">
+                <h2>⛏️ Получить LCKY</h2>
+                <div class="action-section">
+                    <button class="btn btn-primary" onclick="claimInitial()">
+                        🎁 Получить начальные 1000 LCKY
+                    </button>
+                    <button class="btn btn-primary" onclick="claim()">
+                        ⛏️ Claim Daily Reward
+                    </button>
+                    <div class="alert alert-info" style="margin-top: 15px;">
+                        💡 Можно получать награду каждые 24 часа
+                    </div>
+                </div>
+            </div>
+
+            <!-- Donation Card -->
+            <div class="card">
+                <h2>🔥 Donation (Burn)</h2>
+                <div class="action-section">
+                    <div class="input-group">
+                        <label>Количество LCKY:</label>
+                        <input type="number" id="donateAmount" placeholder="100" />
+                    </div>
+                    <div class="input-group">
+                        <label>Сообщение (до 280 символов):</label>
+                        <textarea id="donateMessage" rows="3" placeholder="Для храма и добрых дел..."></textarea>
+                    </div>
+                    <button class="btn btn-secondary" onclick="donateWithMessage()">
+                        🔥 Пожертвовать LCKY
+                    </button>
+                </div>
+            </div>
+
+            <!-- ETH/ICP Donation Card -->
+            <div class="card">
+                <h2 id="crypto-donation-title">💰 Donate ETH</h2>
+                <div class="action-section">
+                    <div class="input-group">
+                        <label id="crypto-label">Количество ETH:</label>
+                        <input type="number" step="0.01" id="cryptoAmount" placeholder="1.0" />
+                    </div>
+                    <div class="alert alert-info">
+                        Exchange Rate: <span id="exchangeRate">1 ETH = 10,000 LCKY</span>
+                    </div>
+                    <button class="btn btn-success" onclick="donateCrypto()">
+                        💸 Donate & Get LCKY
+                    </button>
+                </div>
+            </div>
+
+            <!-- SOS Card -->
+            <div class="card">
+                <h2>🚨 Emergency SOS</h2>
+                <div class="action-section">
+                    <div class="alert alert-info">
+                        Получите ETH/ICP пропорционально вашему балансу LCKY.
+                        Ваши токены будут сожжены.
+                    </div>
+                    <button class="btn btn-secondary" onclick="emergencySOS()">
+                        🚨 Активировать SOS
+                    </button>
+                </div>
+            </div>
+
+            <!-- Messages Card -->
+            <div class="card" style="grid-column: 1 / -1;">
+                <h2>💬 Donation Messages</h2>
+                <div class="messages-list" id="messagesList">
+                    <p style="text-align: center; color: #999;">Загрузка сообщений...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        // State
+        let currentNetwork = 'ethereum';
+        let account = null;
+
+        // Switch network
+        window.switchNetwork = function(network) {
+            currentNetwork = network;
+            document.querySelectorAll('.network-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Update UI
+            if (network === 'icp') {
+                document.getElementById('crypto-donation-title').textContent = '💰 Donate ICP';
+                document.getElementById('crypto-label').textContent = 'Количество ICP:';
+                document.getElementById('exchangeRate').textContent = '1 ICP = 100 LCKY';
+            } else {
+                document.getElementById('crypto-donation-title').textContent = '💰 Donate ETH';
+                document.getElementById('crypto-label').textContent = 'Количество ETH:';
+                document.getElementById('exchangeRate').textContent = '1 ETH = 10,000 LCKY';
+            }
+
+            connectWallet();
+        };
+
+        // Show alert
+        function showAlert(message, type = 'info') {
+            const alertSection = document.getElementById('alert-section');
+            alertSection.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+            setTimeout(() => {
+                alertSection.innerHTML = '';
+            }, 5000);
+        }
+
+        // Show loading
+        function showLoading(show) {
+            const loading = document.getElementById('loading');
+            if (show) {
+                loading.classList.add('active');
+            } else {
+                loading.classList.remove('active');
+            }
+        }
+
+        // Connect wallet
+        async function connectWallet() {
+            showLoading(true);
+            try {
+                if (currentNetwork === 'ethereum') {
+                    if (typeof window.ethereum !== 'undefined') {
+                        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                        account = accounts[0];
+                        updateWalletInfo();
+                        loadStats();
+                        loadMessages();
+                        showAlert('✅ Wallet connected!', 'success');
+                    } else {
+                        showAlert('❌ Please install MetaMask!', 'error');
+                    }
+                } else {
+                    showAlert('🔄 ICP wallet integration coming soon...', 'info');
+                }
+            } catch (error) {
+                showAlert('❌ Error: ' + error.message, 'error');
+            }
+            showLoading(false);
+        }
+
+        // Update wallet info
+        function updateWalletInfo() {
+            const walletSection = document.getElementById('wallet-section');
+            if (account) {
+                walletSection.innerHTML = `
+                    <div class="wallet-info">
+                        <strong>💼 Connected Wallet:</strong><br>
+                        <span class="wallet-address">${account}</span>
+                    </div>
+                `;
+            }
+        }
+
+        // Load stats (mock data for demo)
+        function loadStats() {
+            document.getElementById('totalSupply').textContent = '5,400,000,000 LCKY';
+            document.getElementById('totalMined').textContent = '500,000 LCKY';
+            document.getElementById('currentReward').textContent = '50 LCKY';
+            document.getElementById('donationCount').textContent = '127';
+            document.getElementById('userBalance').textContent = '1,000 LCKY';
+        }
+
+        // Load messages (mock data)
+        function loadMessages() {
+            const messagesList = document.getElementById('messagesList');
+            const mockMessages = [
+                { donor: '0x123...abc', amount: '100 LCKY', message: 'Для храма и добрых дел!', time: '2 hours ago' },
+                { donor: '0x456...def', amount: '500 LCKY', message: 'Помощь нуждающимся', time: '5 hours ago' },
+                { donor: '0x789...ghi', amount: '250 LCKY', message: 'Благодарю за волшебство! 🪄', time: '1 day ago' }
+            ];
+
+            messagesList.innerHTML = mockMessages.map(msg => `
+                <div class="message-item">
+                    <div class="message-header">
+                        <span>${msg.donor}</span>
+                        <span class="message-amount">${msg.amount}</span>
+                    </div>
+                    <div class="message-text">${msg.message}</div>
+                    <div style="margin-top: 5px; font-size: 0.85em; color: #999;">${msg.time}</div>
+                </div>
+            `).join('');
+        }
+
+        // Actions
+        window.claimInitial = async function() {
+            showLoading(true);
+            try {
+                showAlert('🎁 Claiming initial 1000 LCKY...', 'info');
+                // Add actual contract interaction here
+                setTimeout(() => {
+                    showAlert('✅ Successfully claimed 1000 LCKY!', 'success');
+                    loadStats();
+                    showLoading(false);
+                }, 2000);
+            } catch (error) {
+                showAlert('❌ Error: ' + error.message, 'error');
+                showLoading(false);
+            }
+        };
+
+        window.claim = async function() {
+            showLoading(true);
+            try {
+                showAlert('⛏️ Claiming daily reward...', 'info');
+                setTimeout(() => {
+                    showAlert('✅ Successfully claimed 50 LCKY!', 'success');
+                    loadStats();
+                    showLoading(false);
+                }, 2000);
+            } catch (error) {
+                showAlert('❌ Error: ' + error.message, 'error');
+                showLoading(false);
+            }
+        };
+
+        window.donateWithMessage = async function() {
+            const amount = document.getElementById('donateAmount').value;
+            const message = document.getElementById('donateMessage').value;
+
+            if (!amount || amount <= 0) {
+                showAlert('❌ Please enter a valid amount', 'error');
+                return;
+            }
+
+            if (!message || message.length > 280) {
+                showAlert('❌ Message must be between 1 and 280 characters', 'error');
+                return;
+            }
+
+            showLoading(true);
+            try {
+                showAlert('🔥 Processing donation...', 'info');
+                setTimeout(() => {
+                    showAlert(`✅ Successfully donated ${amount} LCKY!`, 'success');
+                    loadStats();
+                    loadMessages();
+                    document.getElementById('donateAmount').value = '';
+                    document.getElementById('donateMessage').value = '';
+                    showLoading(false);
+                }, 2000);
+            } catch (error) {
+                showAlert('❌ Error: ' + error.message, 'error');
+                showLoading(false);
+            }
+        };
+
+        window.donateCrypto = async function() {
+            const amount = document.getElementById('cryptoAmount').value;
+
+            if (!amount || amount <= 0) {
+                showAlert('❌ Please enter a valid amount', 'error');
+                return;
+            }
+
+            showLoading(true);
+            try {
+                const cryptoType = currentNetwork === 'ethereum' ? 'ETH' : 'ICP';
+                showAlert(`💸 Processing ${cryptoType} donation...`, 'info');
+                setTimeout(() => {
+                    const lckyAmount = currentNetwork === 'ethereum' ? amount * 10000 : amount * 100;
+                    showAlert(`✅ Successfully donated ${amount} ${cryptoType}! Received ${lckyAmount} LCKY`, 'success');
+                    loadStats();
+                    document.getElementById('cryptoAmount').value = '';
+                    showLoading(false);
+                }, 2000);
+            } catch (error) {
+                showAlert('❌ Error: ' + error.message, 'error');
+                showLoading(false);
+            }
+        };
+
+        window.emergencySOS = async function() {
+            if (!confirm('⚠️ Are you sure? This will burn all your LCKY tokens!')) {
+                return;
+            }
+
+            showLoading(true);
+            try {
+                showAlert('🚨 Processing SOS...', 'info');
+                setTimeout(() => {
+                    const cryptoType = currentNetwork === 'ethereum' ? 'ETH' : 'ICP';
+                    showAlert(`✅ Successfully received ${cryptoType}! Your LCKY tokens have been burned.`, 'success');
+                    loadStats();
+                    showLoading(false);
+                }, 2000);
+            } catch (error) {
+                showAlert('❌ Error: ' + error.message, 'error');
+                showLoading(false);
+            }
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            connectWallet();
+        });
+    </script>
+</body>
+</html>
+
