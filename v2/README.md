@@ -1,8 +1,18 @@
 # LCKY v2 - Multi-Chain Lucky Coin Platform 🪄🍯
 
+**Languages:** [English](README_en.md) | [中文](README_cn.md) | [ไทย](README_th.md) | [हिंदी](README_hi.md) | [עברית](README_he.md) | **Русский**
+
 ## О проекте
 
 LCKY v2 - это кросс-чейн платформа волшебных монет, работающая как на Ethereum (ERC20), так и на Internet Computer (ICRC1).
+
+## Философия проекта
+
+Идея проекта вдохновлена фильмом "Заплати вперед" (Pay It Forward) - о том, как один человек может изменить мир, делая добро другим.
+
+[![Pay It Forward Trailer](https://img.youtube.com/vi/TlZDDACt8Nw/0.jpg)](https://www.youtube.com/watch?v=TlZDDACt8Nw)
+
+🎬 [Смотреть трейлер "Заплати вперед" / Pay It Forward](https://www.youtube.com/watch?v=TlZDDACt8Nw)
 
 ## Основные возможности
 
